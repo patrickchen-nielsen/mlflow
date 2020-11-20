@@ -224,13 +224,15 @@ class SqlAlchemyStore(AbstractStore):
 
     # CRUD API for ModelVersion objects
 
-    def create_model_version(self, name, source, run_id):
+    def create_model_version(self, name, source, run_id, version_number=None):
         """
         Create a new model version from given source and run ID.
 
         :param name: Name ID for containing registered model.
         :param source: Source path where the MLflow model is stored.
         :param run_id: Run ID from MLflow tracking server that generated the model
+        :version_number: if passed, version number will be set instead of next_version
+        will check to make sure that the model version doesn't already exist
 
         :return: A single object of :py:class:`mlflow.entities.model_registry.ModelVersion`
         created in the backend.
@@ -240,14 +242,31 @@ class SqlAlchemyStore(AbstractStore):
                 return max([mv.version for mv in sql_registered_model.model_versions]) + 1
             else:
                 return 1
+
+        def check_version_exists(sql_registered_model, version_number):
+            if sql_registered_model.model_version:
+                model_versions = {mv.version for mv in sql_registered_model.model_versions}
+                return version_number in model_versions
+            else:
+                return False
+
+
         with self.ManagedSessionMaker() as session:
             creation_time = now()
             for attempt in range(self.CREATE_MODEL_VERSION_RETRIES):
                 try:
                     sql_registered_model = self._get_registered_model(session, name)
                     sql_registered_model.last_updated_time = creation_time
+                    if version_number:
+                        if not checK_version_exists(sql_registered_model, version_number):
+                            version = version_number
+                        else:
+                            raise MlflowException('Model version number {} already exists'.format(version_number))
+                    else:
+                        version = next_version(sql_registerd_model)
+
                     model_version = SqlModelVersion(name=name,
-                                                    version=next_version(sql_registered_model),
+                                                    version=version,
                                                     creation_time=creation_time,
                                                     last_updated_time=creation_time,
                                                     source=source, run_id=run_id)

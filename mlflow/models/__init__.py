@@ -60,7 +60,7 @@ class Model(object):
             return cls(**yaml.safe_load(f.read()))
 
     @classmethod
-    def log(cls, artifact_path, flavor, registered_model_name=None, **kwargs):
+    def log(cls, artifact_path, flavor, registered_model_name=None, version_number=None, **kwargs):
         """
         Log model using supplied flavor module.
 
@@ -83,7 +83,7 @@ class Model(object):
             if registered_model_name is not None:
                 run_id = mlflow.tracking.fluent.active_run().info.run_id
                 mlflow.register_model("runs:/%s/%s" % (run_id, artifact_path),
-                                      registered_model_name)
+                                      registered_model_name, version_number=version_number)
 
 
 class FlavorBackend(object):

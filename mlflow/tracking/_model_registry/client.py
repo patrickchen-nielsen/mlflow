@@ -90,7 +90,7 @@ class ModelRegistryClient(object):
 
     # Model Version Methods
 
-    def create_model_version(self, name, source, run_id):
+    def create_model_version(self, name, source, run_id, version_number=None):
         """
         Create a new model version from given source or run ID.
 
@@ -100,7 +100,7 @@ class ModelRegistryClient(object):
         :return: Single :py:class:`mlflow.entities.model_registry.ModelVersion` object created by
                  backend.
         """
-        return self.store.create_model_version(name, source, run_id)
+        return self.store.create_model_version(name, source, run_id, version_number)
 
     def update_model_version(self, name, version, stage=None, description=None):
         """

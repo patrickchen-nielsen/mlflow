@@ -7,7 +7,7 @@ from mlflow.utils.logging_utils import eprint
 
 
 @experimental
-def register_model(model_uri, name):
+def register_model(model_uri, name, version_number=None):
     """
     Create a new model version in model registry for the model files specified by ``model_uri``.
     Note that this method assumes the model registry backend URI is the same as that of the
@@ -35,9 +35,9 @@ def register_model(model_uri, name):
     if RunsArtifactRepository.is_runs_uri(model_uri):
         source = RunsArtifactRepository.get_underlying_uri(model_uri)
         (run_id, _) = RunsArtifactRepository.parse_runs_uri(model_uri)
-        create_version_response = client.create_model_version(name, source, run_id)
+        create_version_response = client.create_model_version(name, source, run_id, version_number=version_number)
     else:
-        create_version_response = client.create_model_version(name, source=model_uri, run_id=None)
+        create_version_response = client.create_model_version(name, source=model_uri, run_id=None, version_number=version_number)
     eprint("Created version '{version}' of model '{model_name}'.".format(
         version=create_version_response.version, model_name=create_version_response.get_name()))
     return create_version_response

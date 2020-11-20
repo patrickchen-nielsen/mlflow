@@ -36,10 +36,10 @@ export const deleteRegisteredModelApi = (model, id = getUUID()) => ({
 });
 
 export const CREATE_MODEL_VERSION = 'CREATE_MODEL_VERSION';
-export const createModelVersionApi = (name, source, runId, id = getUUID()) => ({
+export const createModelVersionApi = (name, source, runId, version_number, id = getUUID()) => ({
   type: CREATE_MODEL_VERSION,
-  payload: wrapDeferred(Services.createModelVersion, { name, source, run_id: runId }),
-  meta: { id, name, runId },
+  payload: wrapDeferred(Services.createModelVersion, { name, source, run_id: runId, version_number }),
+  meta: { id, name, runId, version_number },
 });
 
 export const SEARCH_MODEL_VERSIONS = 'SEARCH_MODEL_VERSIONS';

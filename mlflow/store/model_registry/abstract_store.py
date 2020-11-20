@@ -94,13 +94,16 @@ class AbstractStore:
     # CRUD API for ModelVersion objects
 
     @abstractmethod
-    def create_model_version(self, name, source, run_id):
+    def create_model_version(self, name, source, run_id, version_number = None):
         """
         Create a new model version from given source and run ID.
 
         :param name: Name ID for containing registered model.
         :param source: Source path where the MLflow model is stored.
         :param run_id: Run ID from MLflow tracking server that generated the model
+        :version_number: if passed, version number will be set instead of next_version
+         will check to make sure that the model version doesn't already exist
+
 
         :return: A single object of :py:class:`mlflow.entities.model_registry.ModelVersion`
         created in the backend.
