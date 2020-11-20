@@ -386,7 +386,7 @@ message CreateModelVersion {
   optional string run_id = 3;
 
   // version_number to register model under
-  optional string version_number = 4;
+  optional int64 version_number = 4;
 
   message Response {
     // Return new version number generated for this model in registry.

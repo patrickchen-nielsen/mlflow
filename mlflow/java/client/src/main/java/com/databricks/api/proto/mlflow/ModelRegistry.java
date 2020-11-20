@@ -14323,7 +14323,7 @@ public final class ModelRegistry {
      * version_number to register model under
      * </pre>
      *
-     * <code>optional string version_number = 4;</code>
+     * <code>optional int64 version_number = 4;</code>
      */
     boolean hasVersionNumber();
     /**
@@ -14331,18 +14331,9 @@ public final class ModelRegistry {
      * version_number to register model under
      * </pre>
      *
-     * <code>optional string version_number = 4;</code>
+     * <code>optional int64 version_number = 4;</code>
      */
-    java.lang.String getVersionNumber();
-    /**
-     * <pre>
-     * version_number to register model under
-     * </pre>
-     *
-     * <code>optional string version_number = 4;</code>
-     */
-    com.google.protobuf.ByteString
-        getVersionNumberBytes();
+    long getVersionNumber();
   }
   /**
    * Protobuf type {@code mlflow.CreateModelVersion}
@@ -14360,7 +14351,7 @@ public final class ModelRegistry {
       name_ = "";
       source_ = "";
       runId_ = "";
-      versionNumber_ = "";
+      versionNumber_ = 0L;
     }
 
     @java.lang.Override
@@ -14405,10 +14396,9 @@ public final class ModelRegistry {
               runId_ = bs;
               break;
             }
-            case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+            case 32: {
               bitField0_ |= 0x00000008;
-              versionNumber_ = bs;
+              versionNumber_ = input.readInt64();
               break;
             }
             default: {
@@ -15287,13 +15277,13 @@ public final class ModelRegistry {
     }
 
     public static final int VERSION_NUMBER_FIELD_NUMBER = 4;
-    private volatile java.lang.Object versionNumber_;
+    private long versionNumber_;
     /**
      * <pre>
      * version_number to register model under
      * </pre>
      *
-     * <code>optional string version_number = 4;</code>
+     * <code>optional int64 version_number = 4;</code>
      */
     public boolean hasVersionNumber() {
       return ((bitField0_ & 0x00000008) == 0x00000008);
@@ -15303,41 +15293,10 @@ public final class ModelRegistry {
      * version_number to register model under
      * </pre>
      *
-     * <code>optional string version_number = 4;</code>
+     * <code>optional int64 version_number = 4;</code>
      */
-    public java.lang.String getVersionNumber() {
-      java.lang.Object ref = versionNumber_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        if (bs.isValidUtf8()) {
-          versionNumber_ = s;
-        }
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * version_number to register model under
-     * </pre>
-     *
-     * <code>optional string version_number = 4;</code>
-     */
-    public com.google.protobuf.ByteString
-        getVersionNumberBytes() {
-      java.lang.Object ref = versionNumber_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        versionNumber_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public long getVersionNumber() {
+      return versionNumber_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -15364,7 +15323,7 @@ public final class ModelRegistry {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, runId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, versionNumber_);
+        output.writeInt64(4, versionNumber_);
       }
       unknownFields.writeTo(output);
     }
@@ -15385,7 +15344,8 @@ public final class ModelRegistry {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, runId_);
       }
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, versionNumber_);
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(4, versionNumber_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -15420,8 +15380,8 @@ public final class ModelRegistry {
       }
       result = result && (hasVersionNumber() == other.hasVersionNumber());
       if (hasVersionNumber()) {
-        result = result && getVersionNumber()
-            .equals(other.getVersionNumber());
+        result = result && (getVersionNumber()
+            == other.getVersionNumber());
       }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
@@ -15448,7 +15408,8 @@ public final class ModelRegistry {
       }
       if (hasVersionNumber()) {
         hash = (37 * hash) + VERSION_NUMBER_FIELD_NUMBER;
-        hash = (53 * hash) + getVersionNumber().hashCode();
+        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+            getVersionNumber());
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -15589,7 +15550,7 @@ public final class ModelRegistry {
         bitField0_ = (bitField0_ & ~0x00000002);
         runId_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
-        versionNumber_ = "";
+        versionNumber_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
@@ -15700,9 +15661,7 @@ public final class ModelRegistry {
           onChanged();
         }
         if (other.hasVersionNumber()) {
-          bitField0_ |= 0x00000008;
-          versionNumber_ = other.versionNumber_;
-          onChanged();
+          setVersionNumber(other.getVersionNumber());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -16040,13 +15999,13 @@ public final class ModelRegistry {
         return this;
       }
 
-      private java.lang.Object versionNumber_ = "";
+      private long versionNumber_ ;
       /**
        * <pre>
        * version_number to register model under
        * </pre>
        *
-       * <code>optional string version_number = 4;</code>
+       * <code>optional int64 version_number = 4;</code>
        */
       public boolean hasVersionNumber() {
         return ((bitField0_ & 0x00000008) == 0x00000008);
@@ -16056,55 +16015,20 @@ public final class ModelRegistry {
        * version_number to register model under
        * </pre>
        *
-       * <code>optional string version_number = 4;</code>
+       * <code>optional int64 version_number = 4;</code>
        */
-      public java.lang.String getVersionNumber() {
-        java.lang.Object ref = versionNumber_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            versionNumber_ = s;
-          }
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public long getVersionNumber() {
+        return versionNumber_;
       }
       /**
        * <pre>
        * version_number to register model under
        * </pre>
        *
-       * <code>optional string version_number = 4;</code>
+       * <code>optional int64 version_number = 4;</code>
        */
-      public com.google.protobuf.ByteString
-          getVersionNumberBytes() {
-        java.lang.Object ref = versionNumber_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          versionNumber_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * version_number to register model under
-       * </pre>
-       *
-       * <code>optional string version_number = 4;</code>
-       */
-      public Builder setVersionNumber(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
+      public Builder setVersionNumber(long value) {
+        bitField0_ |= 0x00000008;
         versionNumber_ = value;
         onChanged();
         return this;
@@ -16114,28 +16038,11 @@ public final class ModelRegistry {
        * version_number to register model under
        * </pre>
        *
-       * <code>optional string version_number = 4;</code>
+       * <code>optional int64 version_number = 4;</code>
        */
       public Builder clearVersionNumber() {
         bitField0_ = (bitField0_ & ~0x00000008);
-        versionNumber_ = getDefaultInstance().getVersionNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * version_number to register model under
-       * </pre>
-       *
-       * <code>optional string version_number = 4;</code>
-       */
-      public Builder setVersionNumberBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000008;
-        versionNumber_ = value;
+        versionNumber_ = 0L;
         onChanged();
         return this;
       }
@@ -25360,7 +25267,7 @@ public final class ModelRegistry {
       "iled:+\342?(\n&com.databricks.rpc.RPC[$this." +
       "Response]\"\314\001\n\022CreateModelVersion\022\022\n\004name" +
       "\030\001 \001(\tB\004\370\206\031\001\022\024\n\006source\030\002 \001(\tB\004\370\206\031\001\022\016\n\006ru" +
-      "n_id\030\003 \001(\t\022\026\n\016version_number\030\004 \001(\t\0327\n\010Re" +
+      "n_id\030\003 \001(\t\022\026\n\016version_number\030\004 \001(\003\0327\n\010Re" +
       "sponse\022+\n\rmodel_version\030\001 \001(\0132\024.mlflow.M" +
       "odelVersion:+\342?(\n&com.databricks.rpc.RPC" +
       "[$this.Response]\"\244\001\n\022UpdateModelVersion\022" +
