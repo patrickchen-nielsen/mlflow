@@ -244,7 +244,7 @@ class SqlAlchemyStore(AbstractStore):
                 return 1
 
         def check_version_exists(sql_registered_model, version_number):
-            if sql_registered_model.model_version:
+            if sql_registered_model.model_versions:
                 model_versions = {mv.version for mv in sql_registered_model.model_versions}
                 return version_number in model_versions
             else:
@@ -258,7 +258,7 @@ class SqlAlchemyStore(AbstractStore):
                     sql_registered_model = self._get_registered_model(session, name)
                     sql_registered_model.last_updated_time = creation_time
                     if version_number:
-                        if not checK_version_exists(sql_registered_model, version_number):
+                        if not check_version_exists(sql_registered_model, version_number):
                             version = version_number
                         else:
                             raise MlflowException('Model version number {} already exists'.format(version_number))
