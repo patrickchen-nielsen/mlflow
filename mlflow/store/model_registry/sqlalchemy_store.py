@@ -263,7 +263,7 @@ class SqlAlchemyStore(AbstractStore):
                         else:
                             raise MlflowException('Model version number {} already exists'.format(version_number))
                     else:
-                        version = next_version(sql_registerd_model)
+                        version = next_version(sql_registered_model)
 
                     model_version = SqlModelVersion(name=name,
                                                     version=version,
